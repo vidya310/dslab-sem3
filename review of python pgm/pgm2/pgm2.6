@@ -1,0 +1,16 @@
+#Reconstruct matrix from svd
+from numpy import array,diag,dot,zeros
+from scipy.linalg import svd
+A=array([[1,2],[3,4],[5,6]])
+print("A=",A)
+print(A.shape)
+U,s,VT=svd(A)
+print("U=",U)
+print(U.shape)
+print("s=",s)
+print("VT=",VT)
+print(VT.shape)
+sigma=zeros((A.shape[0],A.shape[1]))
+sigma[:A.shape[1],:A.shape[1]]=diag(s)
+B=U.dot(sigma.dot(VT))
+print("Reconstructes matrix:",B)
