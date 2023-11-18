@@ -1,0 +1,33 @@
+import pandas as pd
+ufo = pd.read_csv('https://bit.ly/uforeports') 
+print(ufo.isnull().tail())
+print(ufo.notnull().tail()) 
+print(ufo.isnull().sum())
+print(ufo.shape)
+# if 'all' values are missing in a row, then drop that row (none are dropped in this case) 
+print(ufo.dropna(how='all').shape)
+print(ufo.dropna(subset=['City', 'Shape Reported'], how='any').shape) 
+print(ufo['Shape Reported'].value_counts().head())
+# fill in missing values with a specified value
+print(ufo['Shape Reported'].fillna(value='VARIOUS', inplace=True)) # confirm that the missing values were filled in
+print(ufo['Shape Reported'].value_counts().head()) 
+drinks = pd.read_csv('http://bit.ly/drinksbycountry') 
+print(drinks.head())
+# every DataFrame has an index (sometimes called the "row labels")
+print(drinks.index)
+# index and columns both default to integers if you don't define them 
+print(pd.read_table('http://bit.ly/movieusers', header=None, sep='|').head()) # identification: index remains with each row when filtering the DataFrame 
+print(drinks[drinks.continent=='South America'])
+# selection: select a portion of the DataFrame using the index 
+print(drinks.loc[23, 'beer_servings'])
+# set an existing column as the index 
+print(drinks.set_index('country', inplace=True)) 
+print(drinks.head())
+# you can interact with any DataFrame using its index and columns 
+print(drinks.describe().loc['25%', 'beer_servings'])
+# access the Series index 
+print(drinks.continent.value_counts().index) # access the Series values 
+print(drinks.continent.value_counts().values) # any Series can be sorted by its values
+print(drinks.continent.value_counts().sort_values())
+people = pd.Series([3000000, 85000], index=['Albania', 'Andorra'], name='population') # concatenate the 'drinks' DataFrame with the 'population' Series (aligns by the index)
+print(pd.concat([drinks, people], axis=1).head())
