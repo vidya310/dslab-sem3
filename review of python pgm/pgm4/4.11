@@ -1,0 +1,44 @@
+import pandas as pd
+# read a dataset of UFO reports into a DataFrame
+print("'inplace'parameter in pandas: ")
+print()
+ufo = pd.read_csv('http://bit.ly/uforeports')
+print("Dataframe: ")
+print(ufo.head())
+print("Shape : ",ufo.shape)
+print()
+# remove the 'City' column (doesn't affect the DataFrame since inplace=False)
+ufo.drop('City', axis=1)
+# confirm that the 'City' column was not actually removed
+print(ufo.columns)
+print()
+# remove the 'City' column (does affect the DataFrame since inplace=True)
+ufo.drop('City', axis=1, inplace=True)
+# confirm that the 'City' column was actually removed
+print(ufo.columns)
+print()
+print(ufo.shape)
+print()
+34#drop a row if any value is missing from that row (doesn't affect the DataFrame since
+#inplace=False)
+ufo.dropna(how='any')
+# confirm that no rows were actually removed
+print(ufo.shape)
+print()
+print("Using an assignment statement instead of the 'inplace' parameter: ")
+ufo = ufo.set_index('Time')
+print(ufo.tail(3))
+print()
+print("Fill missing values using 'backward fill' strategy: ")
+# doesn't affect the DataFrame since inplace=False
+print(ufo.fillna(method='bfill').tail(3))
+print()
+print("Dataframe: ")
+print(ufo.tail(3))
+print()
+print("Fill missing values using 'forward fill' strategy: ")
+#doesn't affect the DataFrame since inplace=False
+print(ufo.fillna(method='ffill').tail(3))
+print()
+print("Dataframe: ")
+print(ufo.tail(3))
